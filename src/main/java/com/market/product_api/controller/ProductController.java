@@ -2,6 +2,7 @@ package com.market.product_api.controller;
 
 import com.market.product_api.entity.Product;
 import com.market.product_api.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,9 @@ public class ProductController {
     @Autowired // Inject service automatically
     private ProductService service;
 
+    // @Valid triggers validation annotations from Product entity
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@Valid @RequestBody Product product) {
         return service.addProduct(product);
     }
 
