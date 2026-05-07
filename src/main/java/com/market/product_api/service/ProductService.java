@@ -1,6 +1,7 @@
 package com.market.product_api.service;
 
 import com.market.product_api.entity.Product;
+import com.market.product_api.exception.ProductNotFoundException;
 import com.market.product_api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class ProductService {
     }
 
     public void deleteProduct(Integer id) {
+        if (!repository.existsById(id)) {
+            throw new ProductNotFoundException("Product not found");
+        }
         repository.deleteById(id);
     }
 }

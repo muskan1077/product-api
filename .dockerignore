@@ -1,0 +1,14 @@
+.git
+.gradle
+.idea
+build
+
+.DS_Store
+Thumbs.db
+
+*.iml
+*.log
+
+README.md
+HELP.md
+ToDo.txt
