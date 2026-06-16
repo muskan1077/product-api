@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-api-config
+  namespace: product-api
+ata:
+  # The product-api pod uses the mysql Service name, not the MySQL pod name directly.
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/productdb
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  SPRING_JPA_SHOW_SQL: "true"
+  SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+  SERVER_PORT: "8080"
+  APP_JWT_EXPIRATION_MS: "3600000"
