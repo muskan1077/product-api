@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+// Handles requests that reach a protected endpoint without valid authentication.
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

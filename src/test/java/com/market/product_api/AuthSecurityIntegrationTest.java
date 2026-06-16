@@ -1,6 +1,6 @@
 package com.market.product_api;
 
-import com.market.product_api.entity.User;
+import com.market.product_api.repository.entity.User;
 import com.market.product_api.repository.ProductRepository;
 import com.market.product_api.repository.UserRepository;
 import com.market.product_api.service.CustomUserDetailsService;
@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+// End-to-end tests for auth flows, JWT protection, and standardized error payloads.
 @SpringBootTest
 @AutoConfigureMockMvc
 class AuthSecurityIntegrationTest {
@@ -46,6 +47,7 @@ class AuthSecurityIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        // Each test starts with a clean in-memory database state.
         productRepository.deleteAll();
         userRepository.deleteAll();
     }

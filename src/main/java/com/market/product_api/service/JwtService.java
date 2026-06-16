@@ -12,6 +12,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
 
+// Responsible for generating JWTs and reading claims back from them later.
 @Service
 public class JwtService {
 
@@ -28,6 +29,7 @@ public class JwtService {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expirationMs);
 
+        // The token payload stores the username as subject and signs it with the configured secret key.
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(now)
@@ -50,6 +52,7 @@ public class JwtService {
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        // Parsing also verifies the token signature before any claim is returned.
         Claims claims = Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
@@ -60,16 +63,8 @@ public class JwtService {
     }
 
     private SecretKey getSigningKey() {
+        // The secret is stored in Base64 so it can be safely kept in properties or secrets.
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
-
-//getSigningKey() converts the configured secret into a SecretKey used for JWT signing and verification. extractClaim() is a reusable helper that parses the JWT, verifies its signature using that key, reads the payload claims, and returns a specific claim like username or expiration through a functional resolver.”
-//
-//If you want, I can next explain this with a real token example showing:
-//
-//header
-//        payload
-//signature
-//where subject and expiration come from.

@@ -1,6 +1,6 @@
 package com.market.product_api.controller;
 
-import com.market.product_api.entity.Product;
+import com.market.product_api.repository.entity.Product;
 import com.market.product_api.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController // Marks class as REST API controller
-@RequestMapping("/products") // Base URL path
+// Product endpoints are protected by JWT security in SecurityConfig.
+@RestController
+@RequestMapping("/products")
 public class ProductController {
 
-    @Autowired // Inject service automatically
+    @Autowired
     private ProductService service;
 
-    // @Valid triggers validation annotations from Product entity
+    // @Valid triggers entity validation before the service layer runs.
     @PostMapping
     public Product addProduct(@Valid @RequestBody Product product) {
         return service.addProduct(product);

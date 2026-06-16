@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+// Defines which endpoints are public, how JWT auth is applied, and which beans back Spring Security.
 @Configuration
 public class SecurityConfig {
 
@@ -35,11 +36,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Stateless APIs usually disable CSRF and rely on tokens instead of sessions.
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests(auth -> auth
+                        // Auth endpoints must stay public so clients can obtain tokens.
                         .requestMatchers("/auth/**").permitAll()
+                        // Product APIs require a valid JWT.
                         .requestMatchers("/products/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/error").permitAll()
                         .anyRequest().permitAll()
@@ -52,6 +56,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
+        // DaoAuthenticationProvider authenticates username/password using our custom user loader.
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
@@ -64,6 +69,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // BCrypt is the standard one-way password hashing algorithm for Spring Security apps.
         return new BCryptPasswordEncoder();
     }
 }

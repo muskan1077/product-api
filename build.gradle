@@ -18,31 +18,38 @@ repositories {
 }
 
 dependencies {
+	// Core Spring Boot dependencies for REST APIs, validation, and persistence.
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Security + JWT dependencies for authentication and authorization.
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.7'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    compileOnly 'org.projectlombok:lombok'
+	// Lombok reduces boilerplate like getters, setters, and constructors.
+	compileOnly 'org.projectlombok:lombok'
 
+	// Runtime dependencies used when the application actually starts.
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.7'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.7'
 
 	annotationProcessor 'org.projectlombok:lombok'
 
+	// Test dependencies for Spring Boot integration tests and security-aware MockMvc tests.
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    testCompileOnly 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testRuntimeOnly 'com.h2database:h2'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
+	// Use JUnit 5 for the project test suite.
 	useJUnitPlatform()
 }

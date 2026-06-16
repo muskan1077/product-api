@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+// Public authentication endpoints used to register users and issue JWT tokens.
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -28,6 +29,7 @@ public class AuthController {
         return authService.register(request);
     }
 
+    // Login validates credentials and returns a fresh JWT for secured API calls.
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);

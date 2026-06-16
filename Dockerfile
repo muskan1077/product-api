@@ -1,3 +1,4 @@
+# Multi-stage Docker build: first build/test the app, then run only the final jar.
 # Build stage: uses Gradle + JDK 17 to compile, test, and package the app.
 FROM gradle:8.14.3-jdk17 AS builder
 

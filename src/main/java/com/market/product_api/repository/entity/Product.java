@@ -1,4 +1,4 @@
-package com.market.product_api.entity;
+package com.market.product_api.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,16 +13,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity // Marks this class as a database entity
-@Table(name = "products") // Table name in MySQL
-@Getter // Lombok generates getter methods
-@Setter // Lombok generates setter methods
-@NoArgsConstructor // Empty constructor
-@AllArgsConstructor // Constructor with all fields
+// JPA entity that maps product records to the products table.
+@Entity
+@Table(name = "products")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
-    @Id // Primary key
-    @GeneratedValue( strategy = GenerationType.IDENTITY) // Auto-increment ID
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank(message = "Product name cannot be empty")

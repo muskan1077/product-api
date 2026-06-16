@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Adapter that converts our User entity into Spring Security's UserDetails model.
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -21,9 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.market.product_api.entity.User user = userRepository.findByUsername(username)
+        com.market.product_api.repository.entity.User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        // Spring Security uses the returned username, hashed password, and authorities during authentication.
         return User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
